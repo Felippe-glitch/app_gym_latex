@@ -1,0 +1,143 @@
+% ============================================================
+\part{Concepção}
+% ============================================================
+
+\section{Introdução}
+
+\subsection{Propósito do documento}
+Este documento registra a modelagem do aplicativo \nomeapp{}, cobrindo as etapas de concepção e de levantamento de requisitos.
+
+\subsection{Escopo do produto}
+O \nomeapp{} é um aplicativo móvel que conecta personal trainers e alunos de academia interessados em acompanhamento profissional. Ele permite que o usuário se vincule a uma academia e a um personal e cobre todo o ciclo do acompanhamento: busca do personal, criação do vínculo, prescrição do treino, registro da execução, acompanhamento da evolução, cobrança e encerramento do vínculo.
+
+A academia participa como usuário com conta própria, que agrupa seus personais.
+
+Em sua concepção inicial, o produto não é uma rede social, embora possa vir a ser. A comunicação se limita ao chat entre personal e aluno. O aplicativo também não processa pagamentos; apenas envia lembretes de cobrança.
+
+\subsection{Glossário}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Termo} & \textbf{Definição} \\
+  \midrule
+  Anônimo   & Usuário não logado, que pode visualizar o aplicativo mas não pode realizar ações. \\
+  Visitante & Pessoa registrada no aplicativo, mas sem vínculo com academia ou personal. \\
+  Personal  & Profissional que prescreve e acompanha treinos. \\
+  Aluno     & Pessoa acompanhada por um personal. \\
+  Academia  & Estabelecimento ao qual personais e alunos se vinculam. \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Descrição do problema}
+
+O acompanhamento entre personal trainer e aluno hoje é fragmentado. Os aplicativos existentes cobrem a prescrição do treino, mas deixam lacunas que obrigam o personal a completar o trabalho com WhatsApp, planilhas e anotações. Três problemas se destacam. O primeiro é que o personal não sabe o que o aluno realmente executou: o registro mostra apenas o treino prescrito, e não as séries efetivamente realizadas, o que dificulta ajustar a carga e medir a evolução. O segundo é que o aluno não tem onde encontrar um personal, pois não há como consultar os profissionais próximos ou vinculados à sua academia, e a escolha depende de indicação informal. O terceiro é que a cobrança é manual: o personal precisa lembrar e cobrar cada aluno individualmente, o que consome tempo e gera atrasos no recebimento.
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  O problema de               & acompanhamento fragmentado entre personal trainer e aluno \\
+  afeta                       & personal trainers e alunos de academia \\
+  cujo impacto é              & a necessidade de acesso à múltiplas softwares para realizar o ciclo de acompanhamento \\
+  Uma boa solução permitiria  & reunir em um só lugar trabalhos que são atualmente fragmentados em whatsapp, excel, dentre outros \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Público-alvo e partes interessadas}
+
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+  \toprule
+  \textbf{Parte interessada} & \textbf{Descrição} & \textbf{Interesse no produto} \\
+  \midrule
+  Personal trainer & Profissional responsável pelo acompanhamento do aluno. & Centralizar o gerenciamento de seus alunos. \\
+  Aluno            & Pessoa vinculada a um personal, que registra a execução de seus treinos. & Ter o treino ajustado ao que realmente executa e acompanhar a própria evolução. \\
+  Academia         & Estabelecimento que fornece a estrutura de treino e exibe os personais vinculados a ela. & Reunir os dados de resultados de seus alunos. \\
+  Visitante        & Pessoa registrada, ainda sem vínculo, que pode se tornar aluno. & Encontrar uma academia ou um personal. \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Análise de concorrentes}
+
+{\small
+\begin{tabularx}{\textwidth}{@{}l L L L@{}}
+  \toprule
+  \textbf{Concorrente} & \textbf{Pontos fortes} & \textbf{Pontos fracos} & \textbf{Oportunidade} \\
+  \midrule
+  MFIT Personal &
+  Base declarada de mais de 200 mil personais e 5 milhões de alunos. Preço de entrada baixo (a partir de R\$~10,90/mês). Biblioteca com mais de 1.800 vídeos de exercícios. Anamnese e avaliação física online. Cobrança recorrente com notificações automáticas pela Carteira MFIT. &
+  Voltado ao personal que já tem seus alunos: não há listagem ou busca de profissionais para quem ainda procura um. Nenhum recurso para academias. Recebimento pelo app com taxa (Pix 2,59\%; cartão a partir de 3,99\% + R\$~0,50). &
+  Permitir que o visitante encontre personais próximos ou vinculados à sua academia. Incluir a academia como participante da plataforma. \\
+  \addlinespace
+  Prime Coaching &
+  Treino e dieta no mesmo app. O aluno registra séries e cargas a cada execução. Cobrança recorrente automática. Comunidade com feed, ranking e desafios. Painel financeiro para o profissional. &
+  Foco em consultoria online, sem vínculo com academia nem busca de profissionais. Preço mais alto (R\$~59,90 a R\$~189,90/mês) e limite de alunos por plano. Taxa de 7,99\% por venda no pagamento pela plataforma, segundo um concorrente. Sem contato direto por WhatsApp. &
+  Atender o acompanhamento presencial dentro da academia. Oferecer contato por WhatsApp. Lembretes de cobrança sem intermediar o pagamento e, portanto, sem taxa por transação. \\
+  \bottomrule
+\end{tabularx}
+}
+
+\textit{Dados consultados em outubro de 2026 nos sites e páginas de loja dos produtos.}
+
+% ------------------------------------------------------------
+\section{Visão do produto}
+
+\subsection{Declaração de visão}
+Para personal trainers e alunos de academia que precisam de um acompanhamento contínuo e centralizado, o \nomeapp{} é um aplicativo móvel de acompanhamento de treinos que reúne, em um só lugar, a busca do profissional, a prescrição e o registro do treino e os lembretes de cobrança. Diferente do MFIT Personal e do Prime Coaching, voltados ao profissional que já tem seus alunos, nosso produto conecta o visitante aos personais de sua academia e inclui a academia como participante da plataforma.
+
+
+\subsection{Diferenciais}
+\begin{itemize}
+  \item Analisar ideias soltas para ter uma lista estruturada
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Estudo de viabilidade}
+
+\subsection{Viabilidade técnica}
+
+Todas as tecnologias necessárias existem, são maduras e têm ampla documentação. Nenhuma parte do produto depende de pesquisa ou de tecnologia experimental. A stack inicial é a seguinte:
+
+\begin{tabularx}{\textwidth}{@{}l l L@{}}
+  \toprule
+  \textbf{Camada} & \textbf{Tecnologia} & \textbf{Uso} \\
+  \midrule
+  Back-end        & .NET          & API, regras de negócio, tarefas agendadas de cobrança e comunicação em tempo real do chat. \\
+  Aplicativo      & React Native  & Um único código para Android e iOS. \\
+  Versão web      & Angular       & Acesso pelo navegador para academia e personal. \\
+  Banco principal & PostgreSQL    & Usuários, vínculos, treinos, execuções e cobranças. \\
+  Banco do chat   & MongoDB       & Armazenamento das mensagens. \\
+  Arquivos        & Bucket na R2 Cloudflare & Vídeos e imagens enviados pelos personais. \\
+  \bottomrule
+\end{tabularx}
+
+A incerteza técnica em aberto é o padrão da API: REST ou GraphQL.
+
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+  \toprule
+  \textbf{Critério} & \textbf{REST} & \textbf{GraphQL} \\
+  \midrule
+  Cache             & Cache HTTP e CDN funcionam sem esforço adicional. & Requisições por POST em um único endpoint; o cache precisa ser implementado no cliente. \\
+  Dados por tela    & Um endpoint por tela, definido no servidor. & O cliente pede exatamente os campos de que precisa em uma única requisição. \\
+  Vários clientes   & Aplicativo e web consomem os mesmos endpoints; telas diferentes podem exigir endpoints próprios. & Cada cliente pede os campos de que precisa, sem alteração no servidor. \\
+  Complexidade      & Menor; padrão já dominado pela equipe. & Maior; exige tratar o problema de N+1 e limitar a complexidade das consultas. \\
+  Envio de arquivos & Direto. & Exige solução à parte. \\
+  Evolução da API   & Versionamento explícito, para conviver com versões antigas do aplicativo. & Evolução do esquema sem versões, por adição e depreciação de campos. \\
+  \bottomrule
+\end{tabularx}
+
+
+\subsection{Viabilidade Financeira}
+
+% ------------------------------------------------------------
+\subsection{Premissas}
+\begin{itemize}
+  \item Personal trainers estão dispostos a adotar um novo aplicativo ou a migrar do que usam hoje.
+  \item Alunos registram a execução dos treinos com regularidade, durante ou logo após o treino.
+  \item Academias têm interesse em participar da plataforma e em exibir os personais vinculados a elas.
+  \item Há personais cadastrados em número suficiente, por academia ou região, para que a busca seja útil ao visitante.
+  \item Personais aceitam ter perfil público e ser listados ao lado de outros profissionais.
+  \item Personais e alunos possuem smartphone Android ou iOS compatível e acesso à internet, ainda que instável dentro da academia.
+  \item Lembretes de cobrança, sem processamento do pagamento pelo aplicativo, são suficientes para o personal.
+  \item A equipe consegue aprender desenvolvimento móvel dentro do prazo previsto para o MVP.
+  \item O aplicativo será aprovado na revisão da App Store e do Google Play.
+\end{itemize}

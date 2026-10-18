@@ -1,0 +1,195 @@
+% ============================================================
+\part{Requisitos}
+% ============================================================
+
+\section{Atores do sistema}
+
+\orientacao{Cada perfil de usuário e o que ele pode fazer no sistema.}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Ator} & \textbf{Descrição e responsabilidades} \\
+  \midrule
+  Personal      & \\
+  Aluno         & \\
+  Academia      & \\
+  Administrador & \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Requisitos funcionais}
+
+\orientacao{O que o sistema deve fazer. Um requisito por linha, verificável
+e sem ambiguidade. Prioridade: Essencial, Importante ou Desejável.
+As duas primeiras linhas são exemplos.}
+
+\begin{longtable}{@{}p{1.3cm} p{8.2cm} p{2.2cm} p{2.3cm}@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} & \textbf{Ator} & \textbf{Prioridade} \\
+  \midrule
+  \endhead
+  \bottomrule
+  \endfoot
+  RF01 & O sistema deve permitir que o personal cadastre um plano de treino
+         com exercícios, séries e repetições. & Personal & Essencial \\
+  RF02 & O sistema deve permitir que o aluno registre quantas séries
+         realizou em relação ao que foi prescrito. & Aluno & Essencial \\
+  RF03 & & & \\
+  RF04 & & & \\
+  RF05 & & & \\
+\end{longtable}
+
+% ------------------------------------------------------------
+\section{Requisitos não funcionais}
+
+\orientacao{Como o sistema deve se comportar. Sempre que possível, use
+números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
+
+\subsection{Desempenho}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} \\
+  \midrule
+  RNF01 & As telas principais devem carregar em até X segundos em rede 4G. \\
+  RNF02 & \\
+  \bottomrule
+\end{tabularx}
+
+\subsection{Disponibilidade e uso offline}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} \\
+  \midrule
+  RNF03 & O registro de séries deve funcionar sem conexão e sincronizar
+          quando a rede voltar. \\
+  RNF04 & \\
+  \bottomrule
+\end{tabularx}
+
+\subsection{Segurança e privacidade}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} \\
+  \midrule
+  RNF05 & O tratamento de dados pessoais deve estar em conformidade com a LGPD. \\
+  RNF06 & \\
+  \bottomrule
+\end{tabularx}
+
+\subsection{Usabilidade}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} \\
+  \midrule
+  RNF07 & \\
+  \bottomrule
+\end{tabularx}
+
+\subsection{Compatibilidade}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} \\
+  \midrule
+  RNF08 & O aplicativo deve funcionar em Android X ou superior e iOS Y ou superior. \\
+  \bottomrule
+\end{tabularx}
+
+\subsection{Escalabilidade e manutenção}
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} \\
+  \midrule
+  RNF09 & \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Regras de negócio}
+
+\orientacao{Políticas e condições do domínio que o sistema precisa respeitar,
+independentemente da tecnologia. A primeira linha é exemplo.}
+
+\begin{tabularx}{\textwidth}{@{}l L l@{}}
+  \toprule
+  \textbf{ID} & \textbf{Descrição} & \textbf{Requisitos} \\
+  \midrule
+  RN01 & O lembrete de mensalidade é enviado X dias antes do vencimento. & RF\,?? \\
+  RN02 & & \\
+  RN03 & & \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Histórias de usuário}
+
+\orientacao{Uma história por funcionalidade. Copie o bloco abaixo para cada nova história.}
+
+\subsection*{HU01 -- Título da história}
+\addcontentsline{toc}{subsection}{HU01 -- Título da história}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Como}       & [ator] \\
+  \textbf{Quero}      & [ação] \\
+  \textbf{Para}       & [benefício] \\
+  \textbf{Requisitos} & RF\,?? \\
+  \textbf{Prioridade} & Essencial / Importante / Desejável \\
+  \bottomrule
+\end{tabularx}
+
+\textbf{Critérios de aceitação}
+\begin{enumerate}
+  \item Dado que [contexto], quando [ação], então [resultado esperado].
+  \item
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{Escopo do MVP}
+
+\orientacao{Priorização pelo método MoSCoW. Só o que está em
+``Deve ter'' entra obrigatoriamente na primeira versão.}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Categoria} & \textbf{Requisitos} \\
+  \midrule
+  Deve ter (Must)             & \\
+  Deveria ter (Should)        & \\
+  Poderia ter (Could)         & \\
+  Não terá agora (Won't)      & \\
+  \bottomrule
+\end{tabularx}
+
+\subsection{Fora de escopo}
+\orientacao{O que explicitamente não será feito, para evitar expectativas erradas.}
+\begin{itemize}
+  \item
+\end{itemize}
+
+% ------------------------------------------------------------
+\section{Matriz de rastreabilidade}
+
+\orientacao{Liga cada objetivo aos requisitos e histórias que o atendem.
+Um requisito sem objetivo é candidato a sair do escopo.}
+
+\begin{tabularx}{\textwidth}{@{}l L L@{}}
+  \toprule
+  \textbf{Objetivo} & \textbf{Requisitos} & \textbf{Histórias} \\
+  \midrule
+  OBJ1 & & \\
+  OBJ2 & & \\
+  OBJ3 & & \\
+  \bottomrule
+\end{tabularx}
+
+% ------------------------------------------------------------
+\section{Aprovação}
+
+\begin{tabularx}{\textwidth}{@{}L l l@{}}
+  \toprule
+  \textbf{Nome} & \textbf{Papel} & \textbf{Data} \\
+  \midrule
+   & & \\
+  \bottomrule
+\end{tabularx}
