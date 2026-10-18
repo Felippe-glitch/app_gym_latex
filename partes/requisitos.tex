@@ -4,55 +4,173 @@
 
 \section{Atores do sistema}
 
-\orientacao{Cada perfil de usuário e o que ele pode fazer no sistema.}
-
 \begin{tabularx}{\textwidth}{@{}l L@{}}
   \toprule
   \textbf{Ator} & \textbf{Descrição e responsabilidades} \\
   \midrule
-  Personal      & \\
-  Aluno         & \\
-  Academia      & \\
-  Administrador & \\
+  Anônimo       & Pessoa sem login. Consulta academias e a vitrine de personais de cada academia. \\
+  Visitante     & Pessoa cadastrada, sem vínculo com personal. Consulta a vitrine, entra em contato com personais e solicita vínculo. \\
+  Aluno         & Pessoa com vínculo ativo com um ou mais personais. Visualiza e registra seus treinos e recebe lembretes de mensalidade. Usa o aplicativo. \\
+  Personal      & Profissional de educação física. Mantém o perfil público, vincula-se a academias, gerencia alunos, prescreve treinos, acompanha a execução e controla mensalidades. Usa o aplicativo. \\
+  Academia      & Gestor do estabelecimento. Mantém o perfil da academia, aprova e gerencia os personais que atuam nela, controla a taxa de acesso dos personais externos e acompanha os indicadores. Usa a versão web. \\
+  Administrador & Equipe da plataforma. Aprova academias, mantém a biblioteca de exercícios e modera perfis e avaliações. Usa a versão web. \\
   \bottomrule
 \end{tabularx}
 
 % ------------------------------------------------------------
+\section{Processos do negócio}
+
+\subsection{Entrada da academia e dos personais}
+\begin{enumerate}
+  \item A academia solicita cadastro na plataforma.
+  \item O administrador analisa e aprova a academia.
+  \item A academia convida seus personais, ou o personal solicita vínculo pelo perfil da academia.
+  \item A academia confere o registro no CREF e define a taxa de acesso, ou a isenção, do personal.
+  \begin{itemize}
+    \item \textbf{Se aprovado:} o vínculo fica ativo e o personal passa a aparecer na vitrine da academia.
+    \item \textbf{Se recusado:} o personal é notificado e o vínculo não é criado.
+  \end{itemize}
+\end{enumerate}
+
+O personal também pode se cadastrar sem academia e usar o aplicativo com os alunos que convidar. Nesse caso, ele não aparece em nenhuma vitrine até se vincular a uma academia aprovada.
+
+\subsection{Contratação do personal pelo aluno}
+\begin{enumerate}
+  \item O visitante abre a vitrine da sua academia e consulta os perfis.
+  \item O visitante conversa com o personal pelo WhatsApp e combina as condições fora do aplicativo.
+  \item O visitante solicita vínculo pelo perfil, ou o personal envia um convite.
+  \item O personal aceita a solicitação e o visitante passa a ser seu aluno.
+  \item O aluno decide se autoriza a academia a ver que treina com esse personal.
+  \item O personal envia a anamnese e configura a mensalidade do aluno.
+\end{enumerate}
+
+\subsection{Ciclo de treino}
+\begin{enumerate}
+  \item O personal monta o plano de treino e o publica para o aluno.
+  \item O aluno abre o treino do dia, com ou sem conexão.
+  \item Para cada série, o aluno registra as repetições e a carga realizadas.
+  \item Ao final, o aluno conclui o treino e pode deixar um comentário e o esforço percebido.
+  \begin{itemize}
+    \item \textbf{Se estiver sem conexão:} o registro fica salvo no aparelho e é enviado quando a rede voltar.
+  \end{itemize}
+  \item O personal vê o executado ao lado do prescrito e ajusta o plano.
+\end{enumerate}
+
+\subsection{Cobrança da mensalidade}
+\begin{enumerate}
+  \item O personal define valor, dia de vencimento e recorrência da mensalidade do aluno.
+  \item O sistema gera a mensalidade de cada período e envia os lembretes ao aluno.
+  \item O aluno paga diretamente ao personal, fora do aplicativo.
+  \item O aluno pode informar no aplicativo que pagou.
+  \item O personal confirma o pagamento.
+  \begin{itemize}
+    \item \textbf{Se não houver confirmação até o vencimento:} a mensalidade fica atrasada e os lembretes de atraso continuam.
+    \item \textbf{Se o personal não reconhecer o pagamento informado:} a mensalidade volta a ficar em aberto.
+  \end{itemize}
+\end{enumerate}
+
+A taxa de acesso que a academia cobra do personal externo segue o mesmo processo, com a academia no papel do personal e o personal no papel do aluno.
+
+\subsection{Encerramento de vínculo}
+\begin{enumerate}
+  \item O aluno ou o personal encerra o vínculo entre eles.
+  \item O personal deixa de ter acesso a novos dados do aluno, e as mensalidades futuras são canceladas.
+  \item O aluno mantém o histórico de treinos para consulta.
+\end{enumerate}
+
+Quando a academia encerra o vínculo com um personal, ele sai da vitrine daquela academia, mas os vínculos com seus alunos continuam.
+
+% ------------------------------------------------------------
 \section{Requisitos funcionais}
 
-\orientacao{O que o sistema deve fazer. Um requisito por linha, verificável
-e sem ambiguidade. Prioridade: Essencial, Importante ou Desejável.
-As duas primeiras linhas são exemplos.}
+\orientacao{Prioridade: Essencial (entra no MVP), Importante ou Desejável.}
 
-\begin{longtable}{@{}p{1.3cm} p{8.2cm} p{2.2cm} p{2.3cm}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.2cm} >{\raggedright\arraybackslash}p{7.6cm} >{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{2.4cm}@{}}
   \toprule
   \textbf{ID} & \textbf{Descrição} & \textbf{Ator} & \textbf{Prioridade} \\
   \midrule
   \endhead
   \bottomrule
   \endfoot
-  RF01 & O sistema deve permitir que o personal cadastre um plano de treino
-         com exercícios, séries e repetições. & Personal & Essencial \\
-  RF02 & O sistema deve permitir que o aluno registre quantas séries
-         realizou em relação ao que foi prescrito. & Aluno & Essencial \\
-  RF03 & & & \\
-  RF04 & & & \\
-  RF05 & & & \\
+  \multicolumn{4}{@{}l}{\textbf{Contas e acesso}} \\
+  RF01 & O sistema deve permitir o cadastro com e-mail e senha. & Visitante & Essencial \\
+  RF02 & O sistema deve permitir o login com conta Google. & Visitante & Importante \\
+  RF03 & O sistema deve permitir a recuperação de senha por e-mail. & Todos & Essencial \\
+  RF04 & O sistema deve permitir escolher, no cadastro, o perfil de aluno ou de personal. & Visitante & Essencial \\
+  RF05 & O sistema deve permitir consultar academias e vitrines de personais sem login. & Anônimo & Essencial \\
+  RF06 & O sistema deve permitir que o usuário exclua a própria conta. & Todos & Essencial \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Academia}} \\
+  RF07 & O sistema deve permitir que a academia solicite cadastro e mantenha seu perfil (nome, endereço, horários e fotos). & Academia & Essencial \\
+  RF08 & O sistema deve permitir que a academia convide um personal por e-mail ou link. & Academia & Essencial \\
+  RF09 & O sistema deve permitir que o personal solicite vínculo com uma academia, e que a academia aprove ou recuse. & Personal, Academia & Essencial \\
+  RF10 & O sistema deve exigir que a academia registre a conferência do CREF do personal antes de aprovar o vínculo. & Academia & Essencial \\
+  RF11 & O sistema deve permitir que a academia suspenda ou encerre o vínculo com um personal. & Academia & Essencial \\
+  RF12 & O sistema deve permitir que a academia defina a taxa de acesso de cada personal (valor e periodicidade) ou o isente. & Academia & Essencial \\
+  RF13 & O sistema deve gerar as cobranças da taxa de acesso, enviar lembretes ao personal e permitir que a academia as marque como pagas. & Academia & Essencial \\
+  RF14 & O sistema deve exibir à academia um painel com os personais vinculados, o status de cada vínculo, o número de alunos ativos por personal e a situação da taxa de acesso. & Academia & Essencial \\
+  RF15 & O sistema deve exibir à academia quais alunos treinam com cada personal, apenas para os alunos que autorizaram. & Academia & Importante \\
+  RF16 & O sistema deve exibir à academia a frequência de treinos registrados pelos alunos de cada personal. & Academia & Desejável \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Perfil e vitrine}} \\
+  RF17 & O sistema deve permitir que o personal mantenha um perfil público com foto, apresentação, especialidades, CREF, academias, faixa de preço, horários e WhatsApp. & Personal & Essencial \\
+  RF18 & O sistema deve exibir a vitrine com os personais vinculados a uma academia. & Anônimo, Visitante, Aluno & Essencial \\
+  RF19 & O sistema deve permitir filtrar a vitrine por especialidade e horário. & Anônimo, Visitante, Aluno & Importante \\
+  RF20 & O sistema deve abrir uma conversa no WhatsApp com o personal, com mensagem inicial preenchida. & Visitante, Aluno & Essencial \\
+  RF47 & O sistema deve permitir que o personal use o aplicativo sem vínculo com academia, gerenciando os alunos convidados por link. & Personal & Essencial \\
+  RF48 & O sistema deve disponibilizar o perfil público do personal em um link próprio, que pode ser compartilhado fora do aplicativo. & Personal & Importante \\
+  RF49 & O sistema deve permitir que o personal indique a academia onde atende, para que ela seja convidada à plataforma. & Personal & Desejável \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Vínculo entre personal e aluno}} \\
+  RF21 & O sistema deve permitir que o visitante solicite vínculo pelo perfil do personal, e que o personal aceite ou recuse. & Visitante, Personal & Essencial \\
+  RF22 & O sistema deve permitir que o personal convide um aluno por link. & Personal & Essencial \\
+  RF23 & O sistema deve permitir que o aluno ou o personal encerre o vínculo. & Aluno, Personal & Essencial \\
+  RF24 & O sistema deve exibir ao personal a lista de alunos, com o status do vínculo e a data do último treino. & Personal & Essencial \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Treino}} \\
+  RF25 & O sistema deve oferecer uma biblioteca de exercícios com vídeo de demonstração. & Administrador & Essencial \\
+  RF26 & O sistema deve permitir que o personal cadastre exercícios próprios com vídeo. & Personal & Essencial \\
+  RF27 & O sistema deve permitir que o personal monte um plano de treino com divisões, exercícios, séries, repetições, carga, descanso e observações. & Personal & Essencial \\
+  RF28 & O sistema deve permitir que o personal salve planos como modelo e os reutilize. & Personal & Importante \\
+  RF29 & O sistema deve exibir ao aluno o treino do dia, com os vídeos dos exercícios. & Aluno & Essencial \\
+  RF30 & O sistema deve permitir que o aluno registre, em cada série, as repetições e a carga realizadas em relação ao prescrito. & Aluno & Essencial \\
+  RF31 & O sistema deve permitir que o aluno registre o esforço percebido e um comentário ao concluir o treino. & Aluno & Importante \\
+  RF32 & O sistema deve exibir ao personal as execuções do aluno, com a diferença entre o prescrito e o executado. & Personal & Essencial \\
+  RF33 & O sistema deve exibir o histórico e um gráfico de evolução de carga por exercício. & Aluno, Personal & Importante \\
+  RF34 & O sistema deve oferecer um cronômetro de descanso entre séries. & Aluno & Importante \\
+  RF35 & O sistema deve permitir que o personal envie uma anamnese e que o aluno a preencha. & Personal, Aluno & Importante \\
+  RF36 & O sistema deve permitir registrar avaliação física (peso, medidas e fotos). & Personal & Desejável \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Mensalidades}} \\
+  RF37 & O sistema deve permitir que o personal defina a mensalidade de cada aluno (valor, dia de vencimento e recorrência). & Personal & Essencial \\
+  RF38 & O sistema deve gerar as mensalidades de cada período e enviar lembretes ao aluno. & Sistema & Essencial \\
+  RF39 & O sistema deve permitir que o aluno informe o pagamento e que o personal o confirme. & Aluno, Personal & Essencial \\
+  RF40 & O sistema deve exibir ao personal as mensalidades em aberto, pagas e atrasadas. & Personal & Essencial \\
+  RF41 & O sistema deve exibir no lembrete a chave Pix do personal, com opção de copiar. & Aluno & Importante \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Notificações e avaliações}} \\
+  RF42 & O sistema deve enviar notificações push de novo treino, solicitação de vínculo e lembretes de cobrança. & Sistema & Essencial \\
+  RF43 & O sistema deve permitir que o aluno configure lembretes de treino. & Aluno & Desejável \\
+  RF44 & O sistema deve permitir que o aluno avalie o personal com nota e comentário. & Aluno & Desejável \\
+  \addlinespace
+  \multicolumn{4}{@{}l}{\textbf{Administração}} \\
+  RF45 & O sistema deve permitir que o administrador aprove ou recuse academias. & Administrador & Essencial \\
+  RF46 & O sistema deve permitir que o administrador remova perfis e avaliações irregulares. & Administrador & Importante \\
 \end{longtable}
 
 % ------------------------------------------------------------
 \section{Requisitos não funcionais}
-
-\orientacao{Como o sistema deve se comportar. Sempre que possível, use
-números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
 
 \subsection{Desempenho}
 \begin{tabularx}{\textwidth}{@{}l L@{}}
   \toprule
   \textbf{ID} & \textbf{Descrição} \\
   \midrule
-  RNF01 & As telas principais devem carregar em até X segundos em rede 4G. \\
-  RNF02 & \\
+  RNF01 & As telas principais do aplicativo devem carregar em até 2 segundos em rede 4G, e em até 1 segundo quando os dados já estiverem no aparelho. \\
+  RNF02 & A API deve responder em até 500 ms em 95\% das requisições, exceto envio de arquivos. \\
+  RNF03 & O registro de uma série deve aparecer na tela imediatamente, sem esperar a resposta do servidor. \\
+  RNF04 & Os vídeos de exercício devem começar a reproduzir em até 3 segundos em rede 4G, entregues por streaming via CDN. \\
+  RNF05 & Os vídeos enviados pelo personal devem ser comprimidos no envio, com limite de 60 segundos de duração. \\
   \bottomrule
 \end{tabularx}
 
@@ -61,9 +179,10 @@ números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
   \toprule
   \textbf{ID} & \textbf{Descrição} \\
   \midrule
-  RNF03 & O registro de séries deve funcionar sem conexão e sincronizar
-          quando a rede voltar. \\
-  RNF04 & \\
+  RNF06 & O treino vigente e os últimos 30 dias de histórico devem estar disponíveis sem conexão. \\
+  RNF07 & Os registros feitos sem conexão devem ser sincronizados automaticamente em até 1 minuto após a rede voltar, sem ação do aluno. \\
+  RNF08 & Nenhum registro feito sem conexão pode ser perdido se o aplicativo ou o aparelho for fechado. \\
+  RNF09 & O back-end deve ter disponibilidade mínima de 99,5\% ao mês. \\
   \bottomrule
 \end{tabularx}
 
@@ -72,8 +191,12 @@ números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
   \toprule
   \textbf{ID} & \textbf{Descrição} \\
   \midrule
-  RNF05 & O tratamento de dados pessoais deve estar em conformidade com a LGPD. \\
-  RNF06 & \\
+  RNF10 & Toda comunicação deve usar HTTPS com TLS 1.2 ou superior. \\
+  RNF11 & As senhas devem ser armazenadas com algoritmo de hash adaptativo e salt, nunca em texto. \\
+  RNF12 & A autorização deve ser verificada no servidor, pelo perfil do usuário e pelo vínculo com o dado acessado. \\
+  RNF13 & O tratamento de dados pessoais deve estar em conformidade com a LGPD, com consentimento específico, destacado e revogável para a anamnese (dado de saúde) e para o compartilhamento com a academia. \\
+  RNF14 & O pedido de exclusão de conta deve ser atendido em até 15 dias. \\
+  RNF15 & Vídeos e fotos devem ser acessados apenas por links temporários assinados. \\
   \bottomrule
 \end{tabularx}
 
@@ -82,7 +205,9 @@ números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
   \toprule
   \textbf{ID} & \textbf{Descrição} \\
   \midrule
-  RNF07 & \\
+  RNF16 & O aluno deve conseguir registrar uma série com no máximo 2 toques a partir da tela do treino. \\
+  RNF17 & A interface deve estar em português do Brasil. \\
+  RNF18 & Contraste de cores e tamanho das áreas de toque devem seguir o nível AA da WCAG 2.1. \\
   \bottomrule
 \end{tabularx}
 
@@ -91,7 +216,8 @@ números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
   \toprule
   \textbf{ID} & \textbf{Descrição} \\
   \midrule
-  RNF08 & O aplicativo deve funcionar em Android X ou superior e iOS Y ou superior. \\
+  RNF19 & O aplicativo deve funcionar em Android 8.0 ou superior e iOS 15 ou superior. \pendente{confirmar com a versão do React Native adotada} \\
+  RNF20 & A versão web deve funcionar nas duas últimas versões de Chrome, Edge, Firefox e Safari, a partir de 1280 px de largura. \\
   \bottomrule
 \end{tabularx}
 
@@ -100,86 +226,203 @@ números que possam ser medidos. A primeira linha de cada tabela é exemplo.}
   \toprule
   \textbf{ID} & \textbf{Descrição} \\
   \midrule
-  RNF09 & \\
+  RNF21 & O sistema deve suportar \pendente{número} academias e \pendente{número} usuários ativos sem mudança de arquitetura. \\
+  RNF22 & A API deve ser versionada, e cada versão anterior do aplicativo deve continuar funcionando por pelo menos 3 meses após o lançamento de uma nova. \\
+  RNF23 & Os erros do aplicativo e do back-end devem ser registrados em ferramenta de monitoramento, com alerta à equipe. \\
+  RNF24 & Build e testes automatizados devem rodar a cada alteração no código. \\
   \bottomrule
 \end{tabularx}
 
 % ------------------------------------------------------------
 \section{Regras de negócio}
 
-\orientacao{Políticas e condições do domínio que o sistema precisa respeitar,
-independentemente da tecnologia. A primeira linha é exemplo.}
-
 \begin{tabularx}{\textwidth}{@{}l L l@{}}
   \toprule
   \textbf{ID} & \textbf{Descrição} & \textbf{Requisitos} \\
   \midrule
-  RN01 & O lembrete de mensalidade é enviado X dias antes do vencimento. & RF\,?? \\
-  RN02 & & \\
-  RN03 & & \\
+  RN01 & A academia só fica ativa na plataforma após aprovação do administrador. & RF07, RF45 \\
+  RN02 & O vínculo entre personal e academia só fica ativo após a academia registrar a conferência do CREF. & RF09, RF10 \\
+  RN03 & O personal pode ter vínculo ativo com mais de uma academia. & RF09 \\
+  RN04 & O personal só aparece na vitrine de uma academia enquanto tiver vínculo ativo com ela. & RF11, RF18 \\
+  RN05 & O encerramento do vínculo entre academia e personal não encerra os vínculos do personal com seus alunos. & RF11, RF23 \\
+  RN06 & O aluno pode ter vínculo ativo com mais de um personal, mas só um vínculo ativo com o mesmo personal. & RF21 \\
+  RN07 & O personal só acessa dados de alunos com vínculo ativo. Após o encerramento, perde o acesso a novos dados, e o aluno mantém o histórico. & RF23, RF32 \\
+  RN08 & A academia só vê o nome de um aluno vinculado a um personal se o aluno autorizou; sem autorização, vê apenas a quantidade. & RF14, RF15 \\
+  RN09 & A anamnese só é visível ao personal com vínculo ativo com o aluno. & RF35 \\
+  RN10 & Os lembretes de mensalidade são enviados 3 dias antes do vencimento, no dia do vencimento e 1, 3 e 7 dias após, e param quando o pagamento é confirmado. & RF38, RF42 \\
+  RN11 & A mensalidade fica atrasada a partir do dia seguinte ao vencimento sem confirmação de pagamento. & RF40 \\
+  RN12 & O pagamento informado pelo aluno só passa a pago após confirmação do personal. & RF39 \\
+  RN13 & A plataforma não processa pagamentos nem cobra comissão sobre eles. & RF37--RF41 \\
+  RN14 & A taxa de acesso do personal segue as mesmas regras de lembrete e atraso da mensalidade. Personal com vínculo empregatício com a academia é isento. & RF12, RF13 \\
+  RN15 & A execução registrada sem conexão vale com a data e a hora do aparelho no momento do registro. & RF30 \\
+  RN16 & Em conflito na sincronização, prevalece o registro mais recente feito pelo aluno. & RF30 \\
+  RN17 & O aluno só pode avaliar um personal após 30 dias de vínculo, com uma avaliação por vínculo. & RF44 \\
+  RN18 & O personal sem vínculo ativo com academia não aparece em nenhuma vitrine; seu perfil é acessível apenas pelo link próprio. & RF18, RF48 \\
+  RN19 & O perfil do personal só exibe o CREF como conferido quando pelo menos uma academia registrou a conferência. & RF10, RF17 \\
   \bottomrule
 \end{tabularx}
 
 % ------------------------------------------------------------
 \section{Histórias de usuário}
 
-\orientacao{Uma história por funcionalidade. Copie o bloco abaixo para cada nova história.}
-
-\subsection*{HU01 -- Título da história}
-\addcontentsline{toc}{subsection}{HU01 -- Título da história}
+\subsection*{HU01 -- Aprovar personal na academia}
+\addcontentsline{toc}{subsection}{HU01 -- Aprovar personal na academia}
 
 \begin{tabularx}{\textwidth}{@{}l L@{}}
   \toprule
-  \textbf{Como}       & [ator] \\
-  \textbf{Quero}      & [ação] \\
-  \textbf{Para}       & [benefício] \\
-  \textbf{Requisitos} & RF\,?? \\
-  \textbf{Prioridade} & Essencial / Importante / Desejável \\
+  \textbf{Como}       & academia \\
+  \textbf{Quero}      & aprovar os personais que atuam no meu espaço \\
+  \textbf{Para}       & saber quem atende meus alunos e garantir que são profissionais registrados \\
+  \textbf{Requisitos} & RF08, RF09, RF10, RF12 \\
+  \textbf{Prioridade} & Essencial \\
   \bottomrule
 \end{tabularx}
 
 \textbf{Critérios de aceitação}
 \begin{enumerate}
-  \item Dado que [contexto], quando [ação], então [resultado esperado].
-  \item
+  \item Dado que um personal solicitou vínculo, quando a academia abre a solicitação, então vê nome, CREF e especialidades do personal.
+  \item Dado que a academia não registrou a conferência do CREF, quando tenta aprovar, então o sistema impede a aprovação.
+  \item Dado que a academia aprovou o vínculo, quando um visitante abre a vitrine da academia, então o personal aparece nela.
+\end{enumerate}
+
+\subsection*{HU02 -- Encontrar um personal na academia}
+\addcontentsline{toc}{subsection}{HU02 -- Encontrar um personal na academia}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Como}       & visitante \\
+  \textbf{Quero}      & ver os personais que atendem na minha academia \\
+  \textbf{Para}       & escolher um profissional sem depender de indicação \\
+  \textbf{Requisitos} & RF18, RF19, RF20, RF21 \\
+  \textbf{Prioridade} & Essencial \\
+  \bottomrule
+\end{tabularx}
+
+\textbf{Critérios de aceitação}
+\begin{enumerate}
+  \item Dado que escolhi uma academia, quando abro a vitrine, então vejo apenas personais com vínculo ativo com ela.
+  \item Dado que estou no perfil de um personal, quando toco em WhatsApp, então abre uma conversa com ele com mensagem inicial preenchida.
+  \item Dado que solicitei vínculo, quando o personal aceita, então passo a ser aluno dele e recebo uma notificação.
+\end{enumerate}
+
+\subsection*{HU03 -- Prescrever treino}
+\addcontentsline{toc}{subsection}{HU03 -- Prescrever treino}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Como}       & personal \\
+  \textbf{Quero}      & montar o plano de treino do aluno com exercícios e vídeos \\
+  \textbf{Para}       & que ele saiba exatamente o que fazer em cada treino \\
+  \textbf{Requisitos} & RF25, RF26, RF27, RF42 \\
+  \textbf{Prioridade} & Essencial \\
+  \bottomrule
+\end{tabularx}
+
+\textbf{Critérios de aceitação}
+\begin{enumerate}
+  \item Dado que estou montando um plano, quando adiciono um exercício, então posso definir séries, repetições, carga e descanso.
+  \item Dado que cadastrei um exercício próprio com vídeo, quando o incluo no plano, então o aluno vê o vídeo no treino.
+  \item Dado que publiquei o plano, quando o aluno abre o aplicativo, então o treino está disponível e ele recebeu uma notificação.
+\end{enumerate}
+
+\subsection*{HU04 -- Registrar o treino executado}
+\addcontentsline{toc}{subsection}{HU04 -- Registrar o treino executado}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Como}       & aluno \\
+  \textbf{Quero}      & registrar o que realmente fiz em cada série, mesmo sem internet \\
+  \textbf{Para}       & que meu personal ajuste o treino ao que eu consigo executar \\
+  \textbf{Requisitos} & RF29, RF30, RF32 \\
+  \textbf{Prioridade} & Essencial \\
+  \bottomrule
+\end{tabularx}
+
+\textbf{Critérios de aceitação}
+\begin{enumerate}
+  \item Dado que estou no treino do dia, quando registro uma série, então vejo o realizado ao lado do prescrito.
+  \item Dado que estou sem conexão, quando registro séries e concluo o treino, então os registros ficam salvos no aparelho.
+  \item Dado que a conexão voltou, quando passa até 1 minuto, então os registros aparecem para o personal.
+\end{enumerate}
+
+\subsection*{HU05 -- Lembrar o aluno da mensalidade}
+\addcontentsline{toc}{subsection}{HU05 -- Lembrar o aluno da mensalidade}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Como}       & personal \\
+  \textbf{Quero}      & que o sistema lembre meus alunos da mensalidade \\
+  \textbf{Para}       & não precisar cobrar cada um manualmente \\
+  \textbf{Requisitos} & RF37, RF38, RF39, RF40 \\
+  \textbf{Prioridade} & Essencial \\
+  \bottomrule
+\end{tabularx}
+
+\textbf{Critérios de aceitação}
+\begin{enumerate}
+  \item Dado que configurei a mensalidade de um aluno, quando faltam 3 dias para o vencimento, então ele recebe um lembrete.
+  \item Dado que o aluno informou o pagamento, quando eu confirmo, então a mensalidade fica paga e os lembretes param.
+  \item Dado que a mensalidade venceu sem confirmação, quando abro o painel, então ela aparece como atrasada.
+\end{enumerate}
+
+\subsection*{HU06 -- Acompanhar os personais da academia}
+\addcontentsline{toc}{subsection}{HU06 -- Acompanhar os personais da academia}
+
+\begin{tabularx}{\textwidth}{@{}l L@{}}
+  \toprule
+  \textbf{Como}       & academia \\
+  \textbf{Quero}      & ver em um painel os personais vinculados, seus alunos e a situação da taxa de acesso \\
+  \textbf{Para}       & gerenciar os profissionais externos sem planilhas \\
+  \textbf{Requisitos} & RF13, RF14, RF15 \\
+  \textbf{Prioridade} & Essencial \\
+  \bottomrule
+\end{tabularx}
+
+\textbf{Critérios de aceitação}
+\begin{enumerate}
+  \item Dado que tenho personais vinculados, quando abro o painel, então vejo o status de cada vínculo e o número de alunos ativos de cada um.
+  \item Dado que um aluno não autorizou o compartilhamento, quando vejo os alunos de um personal, então ele entra só na contagem, sem nome.
+  \item Dado que a taxa de acesso de um personal venceu sem pagamento, quando abro o painel, então ela aparece como atrasada.
 \end{enumerate}
 
 % ------------------------------------------------------------
 \section{Escopo do MVP}
 
-\orientacao{Priorização pelo método MoSCoW. Só o que está em
-``Deve ter'' entra obrigatoriamente na primeira versão.}
-
 \begin{tabularx}{\textwidth}{@{}l L@{}}
   \toprule
   \textbf{Categoria} & \textbf{Requisitos} \\
   \midrule
-  Deve ter (Must)             & \\
-  Deveria ter (Should)        & \\
-  Poderia ter (Could)         & \\
-  Não terá agora (Won't)      & \\
+  Deve ter (Must)        & RF01, RF03--RF14, RF17, RF18, RF20--RF27, RF29, RF30, RF32, RF37--RF40, RF42, RF45, RF47 \\
+  Deveria ter (Should)   & RF02, RF15, RF19, RF28, RF31, RF33--RF35, RF41, RF46, RF48 \\
+  Poderia ter (Could)    & RF16, RF36, RF43, RF44, RF49 \\
+  Não terá agora (Won't) & Chat interno; pagamento pelo aplicativo; busca aberta por região; versão web para personal e aluno \\
   \bottomrule
 \end{tabularx}
 
 \subsection{Fora de escopo}
-\orientacao{O que explicitamente não será feito, para evitar expectativas erradas.}
 \begin{itemize}
-  \item
+  \item Processamento de pagamentos e emissão de notas fiscais.
+  \item Chat interno; a comunicação é feita pelo WhatsApp.
+  \item Feed, publicações, seguidores e demais recursos de rede social.
+  \item Planos alimentares e nutrição.
+  \item Prescrição de treino por inteligência artificial.
+  \item Controle de catraca, check-in e matrícula de alunos da academia.
+  \item Integração com sistemas de gestão de academia, como Tecnofit e Next Fit.
+  \item Verificação automática do CREF junto ao conselho.
 \end{itemize}
 
 % ------------------------------------------------------------
 \section{Matriz de rastreabilidade}
 
-\orientacao{Liga cada objetivo aos requisitos e histórias que o atendem.
-Um requisito sem objetivo é candidato a sair do escopo.}
-
 \begin{tabularx}{\textwidth}{@{}l L L@{}}
   \toprule
   \textbf{Objetivo} & \textbf{Requisitos} & \textbf{Histórias} \\
   \midrule
-  OBJ1 & & \\
-  OBJ2 & & \\
-  OBJ3 & & \\
+  OBJ1 & RF17--RF24, RF47, RF48 & HU02 \\
+  OBJ2 & RF25--RF34 & HU03, HU04 \\
+  OBJ3 & RF37--RF42 & HU05 \\
+  OBJ4 & Todos os requisitos ``Deve ter'' & HU01--HU06 \\
+  OBJ5 & RF07--RF16 & HU01, HU06 \\
   \bottomrule
 \end{tabularx}
 
